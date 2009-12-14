@@ -1,4 +1,4 @@
-#!/usr/bin/ruby -wKU
+#!/usr/local/bin/ruby -wKU
 
 #begin
 require 'rubygems'
@@ -40,6 +40,11 @@ def respond_error(error, reason)
   respond('error' => error, 'reason' => reason)
 end
 
+def respond_boolean(b)
+  puts b.to_s
+  STDOUT.flush
+end
+
 def run_reduce(srcs, ks, vs, rereduce, b)
   fns = srcs.collect { |src|
     begin
@@ -69,7 +74,7 @@ while cmd = ARGF.gets
   case cmd[0]
   when "reset"
     callables = []
-    respond(true)
+    respond_boolean(true)
   when "add_fun"
     # second arg is a string that will compile to a function
     begin
@@ -79,7 +84,7 @@ while cmd = ARGF.gets
       respond_error('map_compilation_error', "#{e}")
     else
       callables << fn
-      respond(true)
+      respond_boolean(true)
     end
   when "map_doc"
     results = []
