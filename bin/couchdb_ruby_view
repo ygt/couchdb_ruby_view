@@ -2,6 +2,7 @@
 
 #begin
 require 'rubygems'
+require 'date'
 require 'json'
 
 # Highly experimental view requestor for CouchDb
