@@ -5,6 +5,14 @@ require 'rubygems'
 require 'date'
 require 'json'
 
+class Object
+  def deep_freeze
+    freeze
+    self.each(&:deep_freeze) if self.class == Hash or self.class == Array
+  end
+end
+
+
 # Highly experimental view requestor for CouchDb
 # 
 # >> pp RestClient.post("http://127.0.0.1:5984/db/_temp_view", {
@@ -90,7 +98,7 @@ while cmd = ARGF.gets
   when "map_doc"
     results = []
     doc = cmd[1]
-    doc.freeze
+    doc.deep_freeze
     callables.each do |callable|
       map_results = []
       begin
